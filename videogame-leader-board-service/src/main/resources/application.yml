@@ -1,0 +1,7 @@
+micronaut:
+  application:
+    name: videogame-leader-board-service
+
+kafka:
+  bootstrap:
+    servers: localhost:9092

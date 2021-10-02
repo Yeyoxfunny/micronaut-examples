@@ -1,0 +1,12 @@
+micronaut:
+  application:
+    name: config-manager
+  config-client:
+    enabled: true
+
+aws:
+  client:
+    system-manager:
+      parameterstore:
+        enabled: false
+        use-secure-parameters: true
