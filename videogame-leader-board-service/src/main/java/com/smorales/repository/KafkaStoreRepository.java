@@ -1,7 +1,6 @@
 package com.smorales.repository;
 
 import com.smorales.util.Utils;
-import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import org.apache.kafka.streams.KafkaStreams;
@@ -35,15 +34,14 @@ public class KafkaStoreRepository<K, V> implements ReadOnlyRepository<K, V> {
         return toFlowable(store.all());
     }
 
-    protected static <I, E> Flowable<E> toFlowable(KeyValueIterator<I, E> iterator) {
-        return Flowable.create(emitter -> {
-            try (iterator) {
-                while (iterator.hasNext()) {
-                    emitter.onNext(iterator.next().value);
-                }
+    protected static <I, E> Flowable<E> toFlowable(KeyValueIterator<I, E> iteratorArg) {
+        return Flowable.generate(() -> iteratorArg, (iterator, emitter) -> {
+            if (iterator.hasNext()) {
+                emitter.onNext(iterator.next().value);
+            } else {
                 emitter.onComplete();
             }
-        }, BackpressureStrategy.BUFFER);
+        }, KeyValueIterator::close);
     }
 
     protected <I, E> String toTable(KeyValueIterator<I, E> iterator) {
