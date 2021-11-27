@@ -1,16 +1,10 @@
 plugins {
     id("com.github.johnrengelman.shadow") version "7.0.0"
-    id("io.micronaut.application") version "1.5.3"
-    id 'idea'
+    id("io.micronaut.application") version "1.5.4"
 }
 
 version = "0.1"
-group = "com.smorales"
-
-idea.module {
-    downloadJavadoc = true
-    downloadSources = false
-}
+group = "com.example"
 
 repositories {
     mavenCentral()
@@ -21,7 +15,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("com.smorales.*")
+        annotations("com.example.*")
     }
 }
 
@@ -36,14 +30,11 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     implementation("io.micronaut:micronaut-validation")
 
-    implementation("io.micronaut:micronaut-management")
-    //implementation("io.micronaut.jmx:micronaut-jmx")
-
 }
 
 
 application {
-    mainClass.set("com.smorales.Application")
+    mainClass.set("com.example.Application")
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("11")

@@ -1,0 +1,16 @@
+micronaut:
+  application:
+    name: kafkaStreamsExample
+
+kafka:
+  bootstrap:
+    servers: localhost:9092
+  streams:
+    default:
+      num:
+        stream:
+          threads: 1
+#    my-other-stream:
+#      num:
+#        stream:
+#          threads: 10

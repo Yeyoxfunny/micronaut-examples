@@ -5,3 +5,11 @@ micronaut:
 kafka:
   bootstrap:
     servers: localhost:9092
+    streams:
+      default:
+        num.stream.threads: 10
+# kafka.streams.default.state.dir=/tmp
+
+endpoints:
+  health:
+    details-visible: ANONYMOUS
