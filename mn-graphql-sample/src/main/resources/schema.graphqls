@@ -2,6 +2,7 @@ directive @authenticated on FIELD_DEFINITION
 
 type Query {
     bookById(id: ID): Book @authenticated
+    getBook(id: ID): Book
 }
 
 type Book {

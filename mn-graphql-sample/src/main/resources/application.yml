@@ -17,6 +17,7 @@ micronaut:
         httpMethod: POST
         access:
           - isAnonymous()
+          #- isAuthenticated()
 
 graphql:
   path: /graphql

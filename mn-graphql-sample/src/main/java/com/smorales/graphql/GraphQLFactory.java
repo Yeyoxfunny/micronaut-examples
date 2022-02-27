@@ -26,6 +26,7 @@ public class GraphQLFactory {
     @Singleton
     public GraphQL graphQL(ResourceResolver resourceResolver,
                            GraphQLDataFetchers graphQLDataFetchers,
+                           AuthenticationInstrumentation authenticationInstrumentation,
                            AuthorizationDirective authorizationDirective) {
 
         TypeDefinitionRegistry typeRegistry = new TypeDefinitionRegistry();
@@ -37,7 +38,8 @@ public class GraphQLFactory {
         RuntimeWiring runtimeWiring = RuntimeWiring.newRuntimeWiring()
                 .directive("authenticated", authorizationDirective)
                 .type(newTypeWiring("Query")
-                        .dataFetcher("bookById", graphQLDataFetchers.getBookByIdDataFetcher()))
+                        .dataFetcher("bookById", graphQLDataFetchers.getBookByIdDataFetcher())
+                        .dataFetcher("getBook", graphQLDataFetchers.getBookByIdDataFetcher()))
                 //.type(newTypeWiring("Book")
                 //        .dataFetcher("author", graphQLDataFetchers.getAuthorDataFetcher()))
                 .build();
@@ -45,6 +47,8 @@ public class GraphQLFactory {
         SchemaGenerator schemaGenerator = new SchemaGenerator();
         GraphQLSchema graphQLSchema = schemaGenerator.makeExecutableSchema(typeRegistry, runtimeWiring);
 
-        return GraphQL.newGraphQL(graphQLSchema).build();
+        return GraphQL.newGraphQL(graphQLSchema)
+                .instrumentation(authenticationInstrumentation)
+                .build();
     }
 }

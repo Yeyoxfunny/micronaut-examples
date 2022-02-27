@@ -24,7 +24,6 @@ public class GraphQLDataFetchers {
         this.securityService = securityService;
     }
 
-    @Secured(SecurityRule.IS_AUTHENTICATED)
     public DataFetcher<Book> getBookByIdDataFetcher() {
         return dataFetchingEnvironment -> {
             log.info("User is authenticated: {}", securityService.isAuthenticated());
