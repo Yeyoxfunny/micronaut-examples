@@ -1,0 +1,18 @@
+directive @authenticated on FIELD_DEFINITION
+
+type Query {
+    bookById(id: ID): Book @authenticated
+}
+
+type Book {
+    id: ID
+    name: String
+    pageCount: Int
+    author: Author
+}
+
+type Author {
+    id: ID
+    firstName: String
+    lastName: String
+}

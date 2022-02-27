@@ -1,0 +1,28 @@
+micronaut:
+  application:
+    name: mn-graphql-sample
+  security:
+    authentication: bearer
+    token:
+      jwt:
+        signatures:
+          jwks:
+            awscognito:
+              url: 'https://cognito-idp.us-east-1.amazonaws.com/us-east-1_HQ3k16M0U/.well-known/jwks.json'
+    intercept-url-map:
+      - pattern: /graphiql
+        access:
+          - isAnonymous()
+      - pattern: ${graphql.path}
+        httpMethod: POST
+        access:
+          - isAnonymous()
+
+graphql:
+  path: /graphql
+  graphiql:
+    enabled: true
+endpoints:
+  health:
+    discovery-client:
+      enabled: false
